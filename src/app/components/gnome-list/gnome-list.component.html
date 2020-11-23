@@ -1,0 +1,18 @@
+<label>
+    Filter by profession:
+</label>
+<select [(ngModel)]="selectedProfession" (change)="onSelect($event)">
+    <option value="all">--All</option>
+    <option value="unemployed">--Unemployed</option>
+    <option *ngFor="let profession of professions" value="{{profession}}">{{profession}}</option>
+</select>
+
+
+<div class="list-container" *ngIf="gnomes">
+    <a [routerLink]="['/gnome/', gnome.id]" class="gnome" *ngFor="let gnome of gnomesList">
+        <div>
+            <img class="lazyload" data-src="{{gnome.thumbnail}}" alt="{{gnome.name}}">
+            <h4>{{gnome.name}}</h4>
+        </div>
+    </a> 
+</div>
