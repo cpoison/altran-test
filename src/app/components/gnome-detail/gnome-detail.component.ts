@@ -26,7 +26,6 @@ export class GnomeDetailComponent implements OnInit {
       try {
         const gnomes = await this.http.getJSON();
         this.gnome = gnomes.Brastlewark.find(gnome => gnome.id === gnomeId);
-        // console.log("hola", this.gnome);
       } catch (error) {
         throw error
       }

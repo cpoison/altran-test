@@ -14,20 +14,20 @@ export class GnomeListComponent implements OnInit {
   gnomes: any[] = [];
   professions: any[] = [];
   selectedProfession: string;
-  gnomesFiltered: any[]=[];
-  constructor(private gnomeService:GnomeService) {    
+  gnomesFiltered: any[] = [];
+  constructor(private gnomeService: GnomeService) {
   }
-  
+
   ngOnInit(): void {
     this.getGnomesList();
   }
-  
-  async getGnomesList() {
-    await this.gnomeService.getJSON().then(response => {
+
+  getGnomesList() {
+    this.gnomeService.getJSON().then(response => {
       this.gnomes = response.Brastlewark;
-      this.gnomesFiltered=this.gnomes;
-    }).catch(error=> console.log(error));
-    this.getProfessions();
+      this.gnomesFiltered = this.gnomes;
+      this.getProfessions();
+    }).catch(error => { throw error });
   }
 
   numberOfPages() {
@@ -37,7 +37,7 @@ export class GnomeListComponent implements OnInit {
   getProfessions() {
     this.gnomes.map(gnome => {
       gnome.professions.forEach(profession => {
-        if(!this.professions.includes(profession)){
+        if (!this.professions.includes(profession)) {
           this.professions.push(profession);
         }
       })
@@ -48,7 +48,7 @@ export class GnomeListComponent implements OnInit {
     const profession = $event.target.value;
     if (profession === "all") {
       this.gnomesFiltered = this.gnomes;
-    } else if (profession === "unemployed"){
+    } else if (profession === "unemployed") {
       this.gnomesFiltered = this.gnomes.filter(gnome => gnome.professions.length === 0)
     } else {
       this.gnomesFiltered = this.gnomes.filter(gnome => gnome.professions.includes(profession));
