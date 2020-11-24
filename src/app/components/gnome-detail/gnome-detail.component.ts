@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { HttpClientService } from 'src/app/service/http-client.service';
+import { GnomeService } from 'src/app/service/gnome.service';
 
 @Component({
   selector: 'app-gnome-detail',
@@ -12,7 +12,7 @@ export class GnomeDetailComponent implements OnInit {
   gnome;
 
   constructor(
-    private httpService: HttpClientService,
+    private http: GnomeService,
     private activatedRoute: ActivatedRoute
   ) { }
 
@@ -24,7 +24,7 @@ export class GnomeDetailComponent implements OnInit {
     this.activatedRoute.params.subscribe(async params => {
       const gnomeId = parseInt(params.id)
       try {
-        const gnomes = await this.httpService.getGnomes();
+        const gnomes = await this.http.getJSON();
         this.gnome = gnomes.Brastlewark.find(gnome => gnome.id === gnomeId);
         // console.log("hola", this.gnome);
       } catch (error) {

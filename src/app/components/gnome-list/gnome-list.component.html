@@ -9,10 +9,16 @@
 
 
 <div class="list-container" *ngIf="gnomes">
-    <a [routerLink]="['/gnome/', gnome.id]" class="gnome" *ngFor="let gnome of gnomesList">
+    <a [routerLink]="['/gnome/', gnome.id]" class="gnome" *ngFor="let gnome of gnomesFiltered | slice: (currentPage * itemsPerPage) - itemsPerPage : currentPage * itemsPerPage">
         <div>
-            <img class="lazyload" data-src="{{gnome.thumbnail}}" alt="{{gnome.name}}">
+            <img src="{{gnome.thumbnail}}" alt="{{gnome.name}}">
             <h4>{{gnome.name}}</h4>
         </div>
     </a> 
 </div>
+
+<p class="pagination">
+	<button [disabled]="currentPage == 1" (click)="currentPage = currentPage - 1">PREV</button>
+	<span>Page {{currentPage}} of {{ numberOfPages() }}</span>
+	<button [disabled]="currentPage >= gnomesFiltered.length/itemsPerPage" (click)="currentPage = currentPage + 1">NEXT</button>
+</p>

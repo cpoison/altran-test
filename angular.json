@@ -31,7 +31,6 @@
               "src/styles.scss"
             ],
             "scripts": [
-              "node_modules/lazysizes/lazysizes.min.js"
             ]
           },
           "configurations": {

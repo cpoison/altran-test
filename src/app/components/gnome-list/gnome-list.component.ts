@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClientService } from 'src/app/service/http-client.service';
+import { GnomeService } from 'src/app/service/gnome.service';
 
 
 
@@ -9,16 +9,13 @@ import { HttpClientService } from 'src/app/service/http-client.service';
   styleUrls: ['./gnome-list.component.scss']
 })
 export class GnomeListComponent implements OnInit {
-
-  gnomes: any[];
-  professions: any[]
+  currentPage: number = 1;
+  itemsPerPage: number = 10;
+  gnomes: any[] = [];
+  professions: any[] = [];
   selectedProfession: string;
-  gnomesList: any[];
-  gnomesPaginated: any[];
-  constructor(private httpService: HttpClientService) {
-
-    // this.professions = ['Metalworker', 'Stonecarver', 'Woodcarver', 'Tinker', 'Tailor', 'Potter', 'Brewer', 'Medic', 'Prospector', 'Gemcutter', 'Mason', 'Cook', 'Baker', 'Miner', 'Carpenter', 'Farmer', 'Tax inspector', 'Smelter', 'Butcher', 'Blacksmith', 'Sculptor']
-    
+  gnomesFiltered: any[]=[];
+  constructor(private gnomeService:GnomeService) {    
   }
   
   ngOnInit(): void {
@@ -26,65 +23,36 @@ export class GnomeListComponent implements OnInit {
   }
   
   async getGnomesList() {
-
-    this.httpService.getGnomes()
-      .then(response => {
-        
-        this.gnomes = response.Brastlewark
-        this.paginate()
-        this.gnomesList = this.gnomesPaginated;
-        this.getProfessions();
-        console.log(response);
-      })
-      .catch(error => {
-      
-      }) 
-
-    // try {
-    //   const response = await this.httpService.getGnomes()
-    //   this.gnomes = response.Brastlewark
-    //   this.gnomesList = this.gnomes;
-    //   this.getProfessions();
-    //   console.log(response);
-    // } catch (error) {
-    //   throw error;
-    // } 
+    await this.gnomeService.getJSON().then(response => {
+      this.gnomes = response.Brastlewark;
+      this.gnomesFiltered=this.gnomes;
+    }).catch(error=> console.log(error));
+    this.getProfessions();
   }
 
-
-  paginate() {
-    const currentPage = 1;
-    const itemsPerPage = 15;
-    const numberOfPages = Math.ceil(this.gnomes.length / itemsPerPage);
-
-    const begin = ((currentPage - 1) * itemsPerPage);
-    const end = begin + itemsPerPage;
-    this.gnomesPaginated = this.gnomes.slice(begin, end);
-    console.log(this.gnomesPaginated);
-    
+  numberOfPages() {
+    return Math.ceil(this.gnomesFiltered.length / this.itemsPerPage);
   }
 
   getProfessions() {
-
-    const allprofessions = []
-    this.gnomesPaginated.map(gnome => {
-      allprofessions.push(gnome.professions);
+    this.gnomes.map(gnome => {
+      gnome.professions.forEach(profession => {
+        if(!this.professions.includes(profession)){
+          this.professions.push(profession);
+        }
+      })
     })
-    
-    console.log([...new Set(allprofessions.flat(1))]);
-    this.professions = [...new Set(allprofessions.flat(1))]
   }
 
   onSelect($event) {
     const profession = $event.target.value;
     if (profession === "all") {
-      this.gnomesList = this.gnomesPaginated;
+      this.gnomesFiltered = this.gnomes;
     } else if (profession === "unemployed"){
-      this.gnomesList = this.gnomesPaginated.filter(gnome => gnome.professions.length === 0)
+      this.gnomesFiltered = this.gnomes.filter(gnome => gnome.professions.length === 0)
     } else {
-      this.gnomesList = this.gnomesPaginated.filter(gnome => gnome.professions.includes(profession));
+      this.gnomesFiltered = this.gnomes.filter(gnome => gnome.professions.includes(profession));
     }
-    console.log(this.gnomesList);
   }
 
 }
