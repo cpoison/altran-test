@@ -46,6 +46,7 @@ export class GnomeListComponent implements OnInit {
 
   onSelect($event) {
     const profession = $event.target.value;
+    this.currentPage = 1;
     if (profession === "all") {
       this.gnomesFiltered = this.gnomes;
     } else if (profession === "unemployed") {

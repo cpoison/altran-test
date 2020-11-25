@@ -1,1 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
+@import './styles/reset';
+html, body {
+    font-family: 'Sansita Swashed', Arial, Helvetica, sans-serif;
+    height: 100%;
+    background: #454545;
+}
+* {
+    box-sizing: border-box;
+}

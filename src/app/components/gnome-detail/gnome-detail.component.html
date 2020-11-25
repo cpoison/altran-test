@@ -1,1 +1,36 @@
-<h1 *ngIf="gnome">{{gnome.name}}</h1>
+<main class="container">
+    <a routerLink="/gnomes/">&#8592; Back to gnomes list</a>
+    <div class="gnome">
+        <img [src]="gnome?.thumbnail" [alt]="gnome?.name">
+        <div class="gnome-data">
+            <h1>{{gnome?.name}}</h1>
+            <ul class="attributes">
+                <li>
+                    <label>Age:</label>
+                    {{gnome?.age}}
+                </li>
+                <li>
+                    <label>Height:</label>
+                    {{gnome?.height}}
+                </li>
+                <li>
+                    <label>Weight:</label>
+                    {{gnome?.weight}}
+                </li>
+                <li>
+                    <label>Friends:</label>
+                    <ul>
+                        <li *ngFor="let friend of gnome?.friends">{{friend}}</li>
+                    </ul>
+                </li>
+                <li>
+                    <label>Professions:</label>
+                    <ul>
+                        <li *ngFor="let profession of gnome?.professions">{{profession}}</li>
+                    </ul>
+                </li>
+    
+            </ul>
+        </div>
+    </div>
+</main>

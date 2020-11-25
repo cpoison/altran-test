@@ -1,0 +1,58 @@
+@import "../../../styles/variables";
+.container {
+    margin: 1rem;
+    a {
+        background: $orange;
+        border: none;
+        box-shadow: none;
+        padding: 1rem 2rem;
+        margin: 0  0 1rem 0;
+        color: $darkGrey;
+        display: inline-block;
+        text-decoration: none;
+    }
+}
+.gnome {
+    margin: 0 auto;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid $orange;
+    background: $darkGrey;
+    border-radius: 4px;
+    overflow: hidden;
+    .gnome-data {
+        padding: 1rem;
+    }
+    h1 {
+        font-size: 18px;
+        color: $orange;
+        text-align: center;
+        padding: 1rem;
+    }
+    img {
+        margin-right: 1rem;
+        width: 100%;
+    }
+    ul {
+        color: $orange;
+        label {
+            color: $primary;
+        }
+        li {
+            margin: 1rem;
+        }
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .gnome {
+        display: flex;
+        flex-direction: row;
+        img {
+            margin-right: 1rem;
+            width: 100%;
+            max-width: 400px;
+        }
+    }
+}

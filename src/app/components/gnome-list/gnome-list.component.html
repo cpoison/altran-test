@@ -1,24 +1,29 @@
-<label>
-    Filter by profession:
-</label>
-<select [(ngModel)]="selectedProfession" (change)="onSelect($event)">
-    <option value="all">--All</option>
-    <option value="unemployed">--Unemployed</option>
-    <option *ngFor="let profession of professions" value="{{profession}}">{{profession}}</option>
-</select>
+<main class="container">
+    <div class="filter">
+        <label>
+            Filter by profession:
+        </label>
+        <select [(ngModel)]="selectedProfession" (change)="onSelect($event)">
+            <option value="all">--All</option>
+            <option value="unemployed">--Unemployed</option>
+            <option *ngFor="let profession of professions" value="{{profession}}">{{profession}}</option>
+        </select>
+    </div>
 
 
-<div class="list-container" *ngIf="gnomes">
-    <a [routerLink]="['/gnome/', gnome.id]" class="gnome" *ngFor="let gnome of gnomesFiltered | slice: (currentPage * itemsPerPage) - itemsPerPage : currentPage * itemsPerPage">
-        <div>
-            <img src="{{gnome.thumbnail}}" alt="{{gnome.name}}">
+    <div class="list-container" *ngIf="gnomes">
+        <a [routerLink]="['/gnome/', gnome.id]" class="gnome"
+            *ngFor="let gnome of gnomesFiltered | slice: (currentPage * itemsPerPage) - itemsPerPage : currentPage * itemsPerPage">
+            <div class="gnome__image-container">
+                <img src="{{gnome.thumbnail}}" alt="{{gnome.name}}">
+            </div>
             <h4>{{gnome.name}}</h4>
-        </div>
-    </a> 
-</div>
-
-<p class="pagination">
-	<button [disabled]="currentPage == 1" (click)="currentPage = currentPage - 1">PREV</button>
-	<span>Page {{currentPage}} of {{ numberOfPages() }}</span>
-	<button [disabled]="currentPage >= gnomesFiltered.length/itemsPerPage" (click)="currentPage = currentPage + 1">NEXT</button>
-</p>
+        </a>
+    </div>
+    <p class="pagination">
+        <button [disabled]="currentPage == 1" (click)="currentPage = currentPage - 1">PREV</button>
+        <span>Page {{currentPage}} of {{ numberOfPages() }}</span>
+        <button [disabled]="currentPage >= gnomesFiltered.length/itemsPerPage"
+            (click)="currentPage = currentPage + 1">NEXT</button>
+    </p>
+</main>
